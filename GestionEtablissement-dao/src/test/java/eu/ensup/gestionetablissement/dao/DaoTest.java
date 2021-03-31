@@ -2,7 +2,7 @@ package eu.ensup.gestionetablissement.dao;
 
 import static eu.ensup.gestionetablissement.dao.Connect.openConnection;
 import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.Test;
 import eu.ensup.gestionetablissement.business.Course;
 import eu.ensup.gestionetablissement.business.Person;
 import org.hamcrest.core.IsInstanceOf;
@@ -15,14 +15,12 @@ import static org.hamcrest.CoreMatchers.*;
  */
 public class DaoTest
 {
-    PersonDao daoPerson = null;
-    CourseDao daoCourse = null;
+    PersonDao daoPerson = new PersonDao();
+    CourseDao daoCourse = new CourseDao();
 
     @BeforeEach
     public void SetUp() throws ExceptionDao {
         openConnection();
-        daoCourse = new CourseDao();
-        daoPerson = new PersonDao();
     }
 
     @Test
