@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import eu.ensup.gestionetablissement.business.Course;
 import eu.ensup.gestionetablissement.business.Person;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.jupiter.api.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -95,15 +96,6 @@ public class DaoTest
         ExceptionDao exception = assertThrows(ExceptionDao.class , () -> daoPerson.get(2));
         assertNotNull(exception);
         assertTrue(exception.getMessage().contains("Impossible de récupérer les informations de cette personne."));
-    }
-
-    @Test
-    @DisplayName("Instance of person")
-    @Tag("PersonDaoTest")
-    public void IsInstanceOfPerson() throws ExceptionDao {
-        Person p = null;
-        p = daoPerson.get(121);
-        assertInstanceOf(Person.class, p);
     }
 
     @Test
