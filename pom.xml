@@ -33,16 +33,23 @@
   <build>
 	<resources>
 		<resource>
-			<directory>/src/resources</directory>
-			<filtering>true</filtering>
+          <directory>/src/resources</directory>
+          <targetPath>${project.build.directory}</targetPath>
+          <includes>
+            <include>log4j.properties</include>
+          </includes>
 		</resource>
 	</resources>
     <testResources>
       <testResource>
-        <directory>src/resources</directory>
-        <filtering>true</filtering>
+        <directory>/src/resources</directory>
+        <targetPath>${project.build.directory}</targetPath>
+        <includes>
+          <include>log4j.properties</include>
+        </includes>
       </testResource>
     </testResources>
+
     <pluginManagement>
       <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
