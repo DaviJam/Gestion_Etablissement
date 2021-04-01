@@ -33,16 +33,16 @@
   <build>
 	<resources>
 		<resource>
-			<directory>src/resources</directory>
+			<directory>GestionEtablissement-logger/src/src/resources</directory>
 			<filtering>true</filtering>
 		</resource>
 	</resources>
-	<testResources>
-		<testResource>
-			<directory>src/resources</directory>
-			<filtering>true</filtering>
-		</testResource>
-	</testResources>
+    <testResources>
+      <testResource>
+        <directory>GestionEtablissement-logger/src/src/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
     <pluginManagement>
       <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
