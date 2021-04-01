@@ -1,17 +1,26 @@
 package eu.ensup.gestionetablissement.dao;
 
-import eu.ensup.gestionetablissement.business.*;
+import static eu.ensup.gestionetablissement.dao.Connect.openConnection;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static eu.ensup.gestionetablissement.dao.Connect.openConnection;
+import eu.ensup.gestionetablissement.business.Director;
+import eu.ensup.gestionetablissement.business.Manager;
+import eu.ensup.gestionetablissement.business.Person;
+import eu.ensup.gestionetablissement.business.Role;
+import eu.ensup.gestionetablissement.business.Student;
+import eu.ensup.gestionetablissement.business.Teacher;
 
 /**
  * The type Dao.
  */
-public class PersonDao implements IDao<Person>
+public class PersonDao implements IPersonDao
 {
     /**
      * The Cn.
@@ -430,7 +439,7 @@ public class PersonDao implements IDao<Person>
      * @param course the course
      * @return Result of the request
      */
-    public int LinkToCourse(int entity, int course) throws ExceptionDao {
+    public int linkToCourse(int entity, int course) throws ExceptionDao {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
 
         try {

@@ -13,7 +13,7 @@ import static eu.ensup.gestionetablissement.dao.IDao.DaoLogger;
 /**
  * The type Dao login.
  */
-public class LoginDao {
+public class LoginDao implements ILoginDao {
     /**
      * The Connection.
      */

@@ -1,22 +1,35 @@
 package eu.ensup.gestionetablissement.service;
 
-import eu.ensup.gestionetablissement.business.*;
-import eu.ensup.gestionetablissement.dao.PersonDao;
-import eu.ensup.gestionetablissement.dao.MarkDao;
-import eu.ensup.gestionetablissement.dto.*;
-import eu.ensup.gestionetablissement.dao.ExceptionDao;
-import eu.ensup.gestionetablissement.mapper.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import eu.ensup.gestionetablissement.business.Director;
+import eu.ensup.gestionetablissement.business.Manager;
+import eu.ensup.gestionetablissement.business.Mark;
+import eu.ensup.gestionetablissement.business.Person;
+import eu.ensup.gestionetablissement.business.Student;
+import eu.ensup.gestionetablissement.business.Teacher;
+import eu.ensup.gestionetablissement.dao.ExceptionDao;
+import eu.ensup.gestionetablissement.dao.IPersonDao;
+import eu.ensup.gestionetablissement.dao.MarkDao;
+import eu.ensup.gestionetablissement.dao.PersonDao;
+import eu.ensup.gestionetablissement.dto.DirectorDTO;
+import eu.ensup.gestionetablissement.dto.ManagerDTO;
+import eu.ensup.gestionetablissement.dto.PersonDTO;
+import eu.ensup.gestionetablissement.dto.StudentDTO;
+import eu.ensup.gestionetablissement.dto.TeacherDTO;
+import eu.ensup.gestionetablissement.mapper.DirectorMapper;
+import eu.ensup.gestionetablissement.mapper.ManagerMapper;
+import eu.ensup.gestionetablissement.mapper.StudentMapper;
+import eu.ensup.gestionetablissement.mapper.TeacherMapper;
 
 /**
  * The type Service person.
  */
 public class PersonService implements IEntityService<PersonDTO> {
 
-    private PersonDao dao = null;
+    private IPersonDao dao = null;
     
     // nom de la classe
     String className = getClass().getName();
@@ -26,6 +39,10 @@ public class PersonService implements IEntityService<PersonDTO> {
      */
     public PersonService() {
         this.dao = new PersonDao();
+    }
+    
+    public PersonService(IPersonDao idao) {
+        this.dao = idao;
     }
 
 
@@ -149,7 +166,7 @@ public class PersonService implements IEntityService<PersonDTO> {
     public int linkToCourse(int idEtudiant, int idCourse) throws ExceptionService {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         try {
-            int res = this.dao.LinkToCourse(idEtudiant, idCourse);
+            int res = this.dao.linkToCourse(idEtudiant, idCourse);
             return res;
         }catch (ExceptionDao exceptionDao){
             serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
