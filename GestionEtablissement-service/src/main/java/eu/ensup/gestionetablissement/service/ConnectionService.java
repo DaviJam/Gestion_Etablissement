@@ -9,8 +9,9 @@ import eu.ensup.gestionetablissement.dao.LoginDao;
 /**
  * The type Service connection.
  */
-public class ConnectionService implements IConnectionService {
-    private ILoginDao dao;
+public class ConnectionService implements IConnectionService
+{
+    private ILoginDao dao = null;
     // nom de la classe
     String className = getClass().getName();
     

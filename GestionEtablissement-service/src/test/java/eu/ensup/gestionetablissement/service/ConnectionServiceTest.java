@@ -7,15 +7,17 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import eu.ensup.gestionetablissement.dao.ExceptionDao;
 import eu.ensup.gestionetablissement.dao.ILoginDao;
 
+@ExtendWith(MockitoExtension.class)
 @RunWith(MockitoJUnitRunner.class)
 class ConnectionServiceTest
 {
@@ -29,25 +31,21 @@ class ConnectionServiceTest
 
 	@Test
 	@DisplayName("Test exception login and password are good")
-	void testCheckPasswordLoginAndPasswordAreGood()
+	void testCheckPasswordLoginAndPasswordAreGood() throws ExceptionDao, ExceptionService
 	{
-		try {
-			// GIVEN
-			//Stubing = imposer un comportement a un mock
-			Mockito.when(mockDao.checkPassword("root", "")).thenReturn(0);
-			
-			// WHEN
-			// test le comportement du mock
-			final int result = service.checkConnection("root", "");
-			assertEquals(0, result);
-			
-			// THEN
-			// verify que le comportement a été tester
-			Mockito.verify(mockDao).checkPassword("root", "");
-		}
-		catch (ExceptionDao | ExceptionService e) {
-			fail(e.getMessage());
-		}
+		// GIVEN
+		//Stubing = imposer un comportement a un mock
+		when(mockDao.checkPassword("root", "")).thenReturn(0);
+		
+		// WHEN
+		// test le comportement du mock
+		final int result = service.checkConnection("root", "");
+		assertEquals(0, result);
+		
+		// THEN
+		// verify que le comportement a été tester
+		verify(mockDao).checkPassword("root", "");
+		
 	}
 
 	@Test
