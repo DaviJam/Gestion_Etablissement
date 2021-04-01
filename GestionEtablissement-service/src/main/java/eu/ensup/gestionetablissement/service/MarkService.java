@@ -1,20 +1,21 @@
 package eu.ensup.gestionetablissement.service;
 
-import eu.ensup.gestionetablissement.business.Mark;
-import eu.ensup.gestionetablissement.dao.MarkDao;
-import eu.ensup.gestionetablissement.dto.MarkDTO;
-import eu.ensup.gestionetablissement.dao.ExceptionDao;
-import eu.ensup.gestionetablissement.mapper.MarkMapper;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import eu.ensup.gestionetablissement.business.Mark;
+import eu.ensup.gestionetablissement.dao.ExceptionDao;
+import eu.ensup.gestionetablissement.dao.IMarkDao;
+import eu.ensup.gestionetablissement.dao.MarkDao;
+import eu.ensup.gestionetablissement.dto.MarkDTO;
+import eu.ensup.gestionetablissement.mapper.MarkMapper;
 
 /**
  * The type Mark service.
  */
 public class MarkService implements IMarkService {
     
-    private MarkDao dao;    // nom de la classe
+    private IMarkDao dao;    // nom de la classe
     /**
      * The Class name.
      */
@@ -25,6 +26,10 @@ public class MarkService implements IMarkService {
      */
     public MarkService() {
         this.dao = new MarkDao();
+    }
+
+    public MarkService(IMarkDao idao) {
+        this.dao = idao;
     }
 
     public List<MarkDTO> getAll() throws ExceptionService {
