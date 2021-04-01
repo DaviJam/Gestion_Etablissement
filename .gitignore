@@ -25,6 +25,7 @@
 /bin/
 .project
 .classpath
+.settings
 
 #Idea IDE
 *.idea
@@ -34,7 +35,6 @@ hs_err_pid*
 
 # intellij
 *.iml
-
 *target*
 /target/
 /target
