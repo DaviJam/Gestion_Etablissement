@@ -1,17 +1,28 @@
 package eu.ensup.gestionetablissement.service;
 
-import eu.ensup.gestionetablissement.dao.LoginDao;
-import eu.ensup.gestionetablissement.dao.ExceptionDao;
-
 import static eu.ensup.gestionetablissement.service.IService.serviceLogger;
+
+import eu.ensup.gestionetablissement.dao.ExceptionDao;
+import eu.ensup.gestionetablissement.dao.ILoginDao;
+import eu.ensup.gestionetablissement.dao.LoginDao;
 
 /**
  * The type Service connection.
  */
 public class ConnectionService implements IConnectionService {
-    private LoginDao dao = new LoginDao();
+    private ILoginDao dao;
     // nom de la classe
     String className = getClass().getName();
+    
+    public ConnectionService()
+    {
+    	this.dao = new LoginDao();
+    }
+    
+    public ConnectionService(ILoginDao idao)
+    {
+    	this.dao = idao;
+    }
     
     @Override
     public int checkConnection(String mail, String mdp) throws ExceptionService {

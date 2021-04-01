@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.ensup.gestionetablissement.business.School;
+import eu.ensup.gestionetablissement.dao.ExceptionDao;
+import eu.ensup.gestionetablissement.dao.ISchoolDao;
 import eu.ensup.gestionetablissement.dao.SchoolDao;
 import eu.ensup.gestionetablissement.dto.SchoolDTO;
-import eu.ensup.gestionetablissement.dao.ExceptionDao;
 import eu.ensup.gestionetablissement.mapper.SchoolMapper;
 
 /**
  * The type School service.
  */
 public class SchoolService implements IService<SchoolDTO> {
-	private SchoolDao dao;
+	private ISchoolDao dao;
 	// nom de la classe
 	String className = getClass().getName();
 	
@@ -23,6 +24,11 @@ public class SchoolService implements IService<SchoolDTO> {
 	public SchoolService()
 	{
 		this.dao = new SchoolDao();
+	}
+	
+	public SchoolService(ISchoolDao idao)
+	{
+		this.dao = idao;
 	}
 
 	public List<SchoolDTO> getAll() throws ExceptionService
