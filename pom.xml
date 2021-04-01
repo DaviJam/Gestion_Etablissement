@@ -33,13 +33,13 @@
   <build>
 	<resources>
 		<resource>
-			<directory>GestionEtablissement-logger/src/src/resources</directory>
+			<directory>/src/resources</directory>
 			<filtering>true</filtering>
 		</resource>
 	</resources>
     <testResources>
       <testResource>
-        <directory>GestionEtablissement-logger/src/src/resources</directory>
+        <directory>src/resources</directory>
         <filtering>true</filtering>
       </testResource>
     </testResources>
