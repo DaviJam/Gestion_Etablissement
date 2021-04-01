@@ -6,7 +6,7 @@ Version java : 15.0.2
 
 ## Utilisation
 Cloner le projet dans le répertoire de votre choix.
-> git clone https://github.com/DaviJam/Gestion_Etablissement.git
+> git clone -b David https://github.com/DaviJam/Gestion_Etablissement.git
 
 # GestionEtablissement
 
