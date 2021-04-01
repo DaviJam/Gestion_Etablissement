@@ -1,18 +1,13 @@
 package eu.ensup.gestionetablissement.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 
 import eu.ensup.gestionetablissement.business.Course;
 import eu.ensup.gestionetablissement.dao.CourseDao;
 import eu.ensup.gestionetablissement.dao.ExceptionDao;
-import eu.ensup.gestionetablissement.dao.ICourseDao;
 import eu.ensup.gestionetablissement.dto.CourseDTO;
-import eu.ensup.gestionetablissement.mapper.CourseMapper;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
