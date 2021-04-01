@@ -52,14 +52,13 @@ public class DaoTest
     @DisplayName("Person should remain null")
     @Tag("PersonDaoTest")
     public void personIsNull() {
-        Person p = null;
-        try {
-            p = daoPerson.get(0); //Fail
-        } catch (ExceptionDao exceptionDao) {
-            exceptionDao.printStackTrace();
-        }
-        assertNull(p);
-        assertThat(p, nullValue(Person.class));
+        Exception exception = assertThrows(ExceptionDao.class, () -> {
+            daoPerson.get(0); //Fail
+        });
+
+        String expectedMessage = "Impossible de récupérer les informations de cette personne. Veuillez contacter votre administrateur.";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
