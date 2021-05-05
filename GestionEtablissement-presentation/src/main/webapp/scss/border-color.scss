@@ -1,0 +1,81 @@
+@mixin bod-clr-t-none {
+    border-top-color: none;
+}
+@mixin bod-clr-t-dark {
+    border-top-color: #343A40;
+}
+@mixin bod-clr-t-info {
+    border-top-color: #17A2B8;
+}
+@mixin bod-clr-t-light {
+    border-top-color: #F8F9FA;
+}
+@mixin bod-clr-t-sec {
+    border-top-color: #6C757D;
+}
+@mixin bod-clr-b-none {
+    border-bottom-color: none;
+}
+@mixin bod-clr-b-dark {
+    border-bottom-color: #343A40;
+}
+@mixin bod-clr-b-info {
+    border-bottom-color: #17A2B8;
+}
+@mixin bod-clr-b-light {
+    border-bottom-color: #F8F9FA;
+}
+@mixin bod-clr-b-sec {
+    border-bottom-color: #6C757D;
+}
+@mixin bod-clr-l-none {
+    border-left-color: none;
+}
+@mixin bod-clr-l-dark {
+    border-left-color: #343A40;
+}
+@mixin bod-clr-l-info {
+    border-left-color: #17A2B8;
+}
+@mixin bod-clr-l-light {
+    border-left-color: #F8F9FA;
+}
+@mixin bod-clr-l-sec {
+    border-left-color: #6C757D;
+}
+@mixin bod-clr-l-form {
+    border-left-color: #ced4da;
+}
+@mixin bod-clr-r-none {
+    border-right-color: none;
+}
+@mixin bod-clr-r-dark {
+    border-right-color: #343A40;
+}
+@mixin bod-clr-r-info {
+    border-right-color: #17A2B8;
+}
+@mixin bod-clr-r-light {
+    border-right-color: #F8F9FA;
+}
+@mixin bod-clr-r-sec {
+    border-right-color: #6C757D;
+}
+@mixin bod-clr-r-form {
+    border-right-color: #ced4da;
+}
+@mixin bod-clr-none {
+    border-color: none;
+}
+@mixin bod-clr-dark {
+    border-color: #343A40;
+}
+@mixin bod-clr-info {
+    border-color: #17A2B8;
+}
+@mixin bod-clr-light {
+    border-color: #F8F9FA;
+}
+@mixin bod-clr-sec {
+    border-color: #6C757D;
+}

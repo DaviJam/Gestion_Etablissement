@@ -125,7 +125,7 @@ public class PersonDao implements IPersonDao
 
         } catch (SQLException e) {
             DaoLogger.logDaoError(className, methodName,"Problème d'ajout d'une personne à la base de donnée.",e);
-            throw new ExceptionDao("Impossible de créer l'utilisateur. Veuillez contacter votre administrateur.");
+            throw new ExceptionDao("Impossible de créer l'utilisateur. Celui-ci existe déja!");
         }
         return res;
     }
@@ -270,6 +270,92 @@ public class PersonDao implements IPersonDao
                     }
                 }
                 else if(rs.getInt("role") == Role.STUDENT.getNum())
+                {
+                    if(dateofbirth != null) {
+                        p1 = new Student(lastname, email, address, phone, id, firstName, password, (Date)dateofbirth, average);
+                    } else {
+                        p1 = new Student(lastname, email, address, phone, id, firstName, password, null, average);
+                    }
+                }
+                DaoLogger.logDaoInfo(className, methodName,"Les information de l'utilisateur " + lastname +" "+firstName + " " + email + " ont été récupérer de la base de donnée.");
+            } else {
+                DaoLogger.logDaoError(className, methodName,"Echec de récupération d'information concernant l'utilisateur. Ce dernier n'existe pas en base de donnée.");
+                throw new ExceptionDao("Impossible de récupérer les informations de cette personne. Veuillez contacter votre administrateur.");
+            }
+
+            /*
+             * Fermer la connexion
+             */
+            cn.close();
+
+        } catch (SQLException e) {
+            DaoLogger.logDaoError(className, methodName,"La transaction SELECT dans la méthode get a échouée.",e);
+            throw new ExceptionDao("Un problème est survenu au niveau de la base de donnée. Veuillez contacter votre administrateur.");
+        }
+        return p1;
+    }
+
+    /**
+     * Get person by email.
+     *
+     * @param email the person email in the database
+     * @return Person or throw ExceptionDao
+     */
+    public Person get(String email) throws ExceptionDao {
+        Person p1 = null;
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        try {
+            /*
+             * CrÃ©er la connexion
+             */
+            cn = openConnection();
+
+            /*
+             * CrÃ©er la requÃªte
+             */
+            String sql_request = "SELECT * FROM Person WHERE email = ?";
+            st = cn.prepareStatement(sql_request);
+            st.setString(1, email);
+
+            /*
+             * ExÃ©cuter la requÃªte
+             */
+            rs = st.executeQuery();
+
+            /*
+             * Créer une personne
+             */
+            if(rs.next())
+            {
+                int id = rs.getInt("id");
+                String firstName = rs.getString("firstname");
+                String lastname = rs.getString("lastname");
+                String address = rs.getString("address");
+                String phone = rs.getString("phone");
+                int role = rs.getInt("role");
+                String password = rs.getString("password");
+                Object dateofbirth = rs.getObject("dateofbirth");
+                Object subjecttaught = rs.getObject("subjecttaught");
+                float average = rs.getFloat("average");
+
+                if(role == Role.DIRECTOR.getNum())
+                {
+                    p1 = new Director(lastname, email, address, phone, id, firstName, password);
+                }
+                else if(role == Role.MANAGER.getNum())
+                {
+                    p1 = new Manager(lastname, email, address, phone, id, firstName, password);
+                }
+                else if(role == Role.TEACHER.getNum())
+                {
+                    if(subjecttaught != null) {
+                        p1 = new Teacher(lastname, email, address, phone, id, firstName, password, (String)subjecttaught);
+                    }
+                    else {
+                        p1 = new Teacher(lastname, email, address, phone, id, firstName, password, null);
+                    }
+                }
+                else if(role == Role.STUDENT.getNum())
                 {
                     if(dateofbirth != null) {
                         p1 = new Student(lastname, email, address, phone, id, firstName, password, (Date)dateofbirth, average);

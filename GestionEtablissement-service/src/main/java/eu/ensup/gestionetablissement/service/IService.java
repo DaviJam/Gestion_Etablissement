@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IService<T>
 {
-    final LoggerService serviceLogger = new LoggerService();
+    LoggerService serviceLogger = new LoggerService();
 
     /**
      * list all T of the database.
@@ -32,9 +32,7 @@ public interface IService<T>
      * @param entity the entity
      * @return type of result
      */
-    default int create(T entity) throws ExceptionService {
-        return 0;
-    }
+     int create(T entity) throws ExceptionService;
 
     /**
      * Update int.
@@ -42,9 +40,7 @@ public interface IService<T>
      * @param entity the entity
      * @return type of result
      */
-    default int update(T entity) throws ExceptionService {
-        return 0;
-    }
+     int update(T entity) throws ExceptionService;
 
     /**
      * Delete int.
@@ -52,9 +48,7 @@ public interface IService<T>
      * @param entity the entity
      * @return the int
      */
-    default int delete(T entity) throws ExceptionService {
-        return 0;
-    }
+    int delete(T entity) throws ExceptionService;
 
     /**
      * delete an T in the database.

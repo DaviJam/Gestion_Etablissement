@@ -27,47 +27,52 @@ import eu.ensup.gestionetablissement.mapper.TeacherMapper;
 /**
  * The type Service person.
  */
-public class PersonService implements IEntityService<PersonDTO> {
+public class PersonService implements IService<PersonDTO> {
 
     private IPersonDao dao = null;
-    
-    // nom de la classe
+
+    /**
+     * The Class name.
+     */
+// nom de la classe
     String className = getClass().getName();
-    
+
     /**
      * Instantiates a new Service person.
      */
     public PersonService() {
         this.dao = new PersonDao();
     }
-    
+
+    /**
+     * Instantiates a new Person service.
+     *
+     * @param idao the idao
+     */
     public PersonService(IPersonDao idao) {
         this.dao = idao;
     }
 
-
-    // Create Person
     @Override
-    public int create(String surname, String mail, String address, String phone, String firstname, String password, int role, Date dateofbirth, String subjectTaught) throws ExceptionService {
+    public int create(PersonDTO person) throws ExceptionService {
+
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         // Checker le role et faire une instace et l'envoyer dans le DAO
         int check = 0;
-        switch(role){
+        switch(person.getRole().getNum()){
             case 1: // Director
-                PersonDTO directorDTO = new DirectorDTO(surname, mail, address, phone, 0, firstname, password);
-                Person director = DirectorMapper.dtoToBusiness((DirectorDTO)directorDTO);
+                Person director = DirectorMapper.dtoToBusiness((DirectorDTO)person);
                 try {
                     check = this.dao.create(director);
                 }catch (ExceptionDao exceptionDao){
                     serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
-                   throw new ExceptionService(exceptionDao.getMessage());
+                    throw new ExceptionService(exceptionDao.getMessage());
                 }
                 break;
             case 2: // Manager
-                PersonDTO managerDTO = new ManagerDTO(surname, mail, address, phone, 0, firstname, password);
-                Person manager = ManagerMapper.dtoToBusiness((ManagerDTO)managerDTO);
+                Person manager = ManagerMapper.dtoToBusiness((ManagerDTO)person);
                 try{
-                check = this.dao.create(manager);
+                    check = this.dao.create(manager);
                 }catch (ExceptionDao exceptionDao){
                     serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
                     throw new ExceptionService(exceptionDao.getMessage());
@@ -75,8 +80,7 @@ public class PersonService implements IEntityService<PersonDTO> {
                 break;
             case 3: // Teacher
                 // On instancie Personne pour que dans le DAO il puisse récupérer le matière enseignée
-                PersonDTO teacherDTO = new TeacherDTO(surname, mail, address, phone, 0, firstname, password, subjectTaught);
-                Person teacher = TeacherMapper.dtoToBusiness((TeacherDTO)teacherDTO);
+                Person teacher = TeacherMapper.dtoToBusiness((TeacherDTO)person);
                 try {
                     check = this.dao.create(teacher);
                 }catch (ExceptionDao exceptionDao){
@@ -86,10 +90,9 @@ public class PersonService implements IEntityService<PersonDTO> {
                 break;
             case 4: // Student
                 // On instancie Personne pour que dans le DAO il puisse récupérer la date de naissance
-                PersonDTO studentDTO = new StudentDTO(surname, mail, address, phone, 0, firstname,password, dateofbirth);
-                Person student = StudentMapper.dtoToBusiness((StudentDTO)studentDTO);
+                Person student = StudentMapper.dtoToBusiness((StudentDTO)person);
                 try{
-                check = this.dao.create(student);
+                    check = this.dao.create(student);
                 }catch (ExceptionDao exceptionDao){
                     serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
                     throw new ExceptionService(exceptionDao.getMessage());
@@ -101,13 +104,12 @@ public class PersonService implements IEntityService<PersonDTO> {
 
     // Update Person
     @Override
-    public int update(String surname, String mail, String address, String phone, String firstname, String password, int role, Date dateofbirth, String subjectTaught, double average) throws ExceptionService {
+    public int update(PersonDTO person) throws ExceptionService {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         int res = 0;
-        switch(role){
+        switch(person.getRole().getNum()){
             case 1: // Director
-                PersonDTO directorDTO = new DirectorDTO(surname, mail, address, phone, 0, firstname, password);
-                Person director = DirectorMapper.dtoToBusiness((DirectorDTO)directorDTO);
+                Person director = DirectorMapper.dtoToBusiness((DirectorDTO)person);
                 try{
                 res = this.dao.update(director);
                 }catch (ExceptionDao exceptionDao){
@@ -116,8 +118,7 @@ public class PersonService implements IEntityService<PersonDTO> {
                 }
                 break;
             case 2: // Manager
-                PersonDTO managerDTO = new ManagerDTO(surname, mail, address, phone, 0, firstname, password);
-                Person manager = ManagerMapper.dtoToBusiness((ManagerDTO)managerDTO);
+                Person manager = ManagerMapper.dtoToBusiness((ManagerDTO)person);
                 try{
                 res = this.dao.update(manager);
                 }catch (ExceptionDao exceptionDao){
@@ -126,8 +127,7 @@ public class PersonService implements IEntityService<PersonDTO> {
                 }
                 break;
             case 3: // Teacher
-                PersonDTO teacherDTO = new TeacherDTO(surname, mail, address, phone, 0, firstname, password, subjectTaught);
-                Person teacher = TeacherMapper.dtoToBusiness((TeacherDTO)teacherDTO);
+                Person teacher = TeacherMapper.dtoToBusiness((TeacherDTO)person);
                 try{
                 res = this.dao.update(teacher);
                 }catch (ExceptionDao exceptionDao){
@@ -136,8 +136,7 @@ public class PersonService implements IEntityService<PersonDTO> {
                 }
                 break;
             case 4: // Student
-                PersonDTO studentDTO = new StudentDTO(surname, mail, address, phone, 0, firstname,password,dateofbirth,average);
-                Person student = StudentMapper.dtoToBusiness((StudentDTO)studentDTO);
+                Person student = StudentMapper.dtoToBusiness((StudentDTO)person);
                 try{
                 res = this.dao.update(student);
                 }catch (ExceptionDao exceptionDao){
@@ -147,6 +146,11 @@ public class PersonService implements IEntityService<PersonDTO> {
                 break;
         }
         return res;
+    }
+
+    @Override
+    public int delete(PersonDTO entity) throws ExceptionService {
+        return 0;
     }
 
     @Override
@@ -162,7 +166,14 @@ public class PersonService implements IEntityService<PersonDTO> {
         }
     }
 
-    @Override
+    /**
+     * Link to course int.
+     *
+     * @param idEtudiant the id etudiant
+     * @param idCourse   the id course
+     * @return the int
+     * @throws ExceptionService the exception service
+     */
     public int linkToCourse(int idEtudiant, int idCourse) throws ExceptionService {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         try {
@@ -201,6 +212,41 @@ public class PersonService implements IEntityService<PersonDTO> {
             serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
            throw new ExceptionService(exceptionDao.getMessage());
         }
+    }
+
+
+    /**
+     * Get person dto.
+     *
+     * @param email the email
+     * @return the person dto
+     * @throws ExceptionService the exception service
+     */
+    public PersonDTO get(String email) throws ExceptionService {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        try{
+            Person person = this.dao.get(email);
+            PersonDTO personDTO = new PersonDTO();
+            if(person instanceof Student)
+            {
+                personDTO = StudentMapper.businessToDto((Student)person);
+                ((StudentDTO)personDTO).setAverage(this.getAverage(person.getId()));
+            }else if(person instanceof Manager)
+            {
+                personDTO = ManagerMapper.businessToDto((Manager)person);
+            }else if(person instanceof Teacher)
+            {
+                personDTO = TeacherMapper.businessToDto((Teacher)person);
+            }else if(person instanceof Director)
+            {
+                personDTO = DirectorMapper.businessToDto((Director)person);
+            }
+
+            return personDTO;
+        }catch (ExceptionDao exceptionDao){
+            serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
+            throw new ExceptionService(exceptionDao.getMessage());
+        }
 
     }
 
@@ -238,7 +284,14 @@ public class PersonService implements IEntityService<PersonDTO> {
         }
 
     }
-    
+
+    /**
+     * Gets average.
+     *
+     * @param index the index
+     * @return the average
+     * @throws ExceptionService the exception service
+     */
     public float getAverage(int index) throws ExceptionService
     {
     	String methodName = new Object(){}.getClass().getEnclosingMethod().getName();

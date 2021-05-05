@@ -5,6 +5,7 @@
   <artifactId>GestionEtablissement</artifactId>
   <version>1.0</version>
   <packaging>pom</packaging>
+
   <name>GestionEtablissement</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
@@ -31,24 +32,7 @@
     </dependency>
   </dependencies>
   <build>
-	<resources>
-		<resource>
-          <directory>/src/resources</directory>
-          <targetPath>${project.build.directory}</targetPath>
-          <includes>
-            <include>log4j.properties</include>
-          </includes>
-		</resource>
-	</resources>
-    <testResources>
-      <testResource>
-        <directory>/src/resources</directory>
-        <targetPath>${project.build.directory}</targetPath>
-        <includes>
-          <include>log4j.properties</include>
-        </includes>
-      </testResource>
-    </testResources>
+
 
     <pluginManagement>
       <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -96,10 +80,6 @@
           <version>2.22.1</version>
         </plugin>
         <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
-        <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
         </plugin>
@@ -116,6 +96,39 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.2.0</version>
+<!--          <configuration>-->
+<!--            <archive>-->
+<!--              <manifest>-->
+<!--                <addClasspath>true</addClasspath>-->
+<!--                <mainClass>eu.ensup.gestionetablissement.presentation.Main</mainClass>-->
+<!--                <classpathPrefix>dependency/</classpathPrefix>-->
+<!--              </manifest>-->
+<!--            </archive>-->
+<!--          </configuration>-->
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.1.2</version>
+          <executions>
+            <execution>
+              <id>copy-dependencies</id>
+              <phase>package</phase>
+              <goals>
+                <goal>copy-dependencies</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>
+                  ${project.build.directory}/dependency-jars/
+                </outputDirectory>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -125,7 +138,7 @@
     <module>GestionEtablissement-dto</module>
     <module>GestionEtablissement-logger</module>
     <module>GestionEtablissement-mapper</module>
-    <module>GestionEtablissement-presentation</module>
     <module>GestionEtablissement-service</module>
+    <module>GestionEtablissement-presentation</module>
   </modules>
 </project>

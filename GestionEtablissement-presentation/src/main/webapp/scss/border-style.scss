@@ -1,0 +1,30 @@
+@mixin bod-st-none{
+    border-style: none;
+}
+@mixin bod-st-solid{
+    border-style: solid;
+}
+@mixin bod-st-hidden{
+    border-style: hidden;
+}
+@mixin bod-st-dotted{
+    border-style: dotted;
+}
+@mixin bod-st-dashed{
+    border-style: dashed;
+}
+@mixin bod-st-double{
+    border-style: double;
+}
+@mixin bod-st-groove{
+    border-style: groove;
+}
+@mixin bod-st-ridge{
+    border-style: ridge;
+}
+@mixin bod-st-inset{
+    border-style: inset;
+}
+@mixin bod-st-outset{
+    border-style: outset;
+}

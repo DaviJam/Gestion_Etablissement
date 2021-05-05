@@ -1,0 +1,80 @@
+@mixin bod-rd-tl-none {
+    border-top-left-radius: 0;
+}
+@mixin bod-rd-tl-1 {
+    border-top-left-radius: 0.25rem;
+}
+@mixin bod-rd-tl-2 {
+    border-top-left-radius: 0.5rem;
+}
+@mixin bod-rd-tl-3 {
+    border-top-left-radius: 0.75rem;
+}
+@mixin bod-rd-tl-4 {
+    border-top-left-radius: 1rem;
+}
+
+@mixin bod-rd-tr-none {
+    border-top-right-radius: 0;
+}
+@mixin bod-rd-tr-1 {
+    border-top-right-radius: 0.25rem;
+}
+@mixin bod-rd-tr-2 {
+    border-top-right-radius: 0.5rem;
+}
+@mixin bod-rd-tr-3 {
+    border-top-right-radius: 0.75rem;
+}
+@mixin bod-rd-tr-4 {
+    border-top-right-radius: 1rem;
+}
+
+@mixin bod-rd-bl-none {
+    border-bottom-left-radius: 0;
+}
+@mixin bod-rd-bl-1 {
+    border-bottom-left-radius: 0.25rem;
+}
+@mixin bod-rd-bl-2 {
+    border-bottom-left-radius: 0.5rem;
+}
+@mixin bod-rd-bl-3 {
+    border-bottom-left-radius: 0.75rem;
+}
+@mixin bod-rd-bl-4 {
+    border-bottom-left-radius: 1rem;
+}
+
+@mixin bod-rd-br-none {
+    border-bottom-right-radius: 0;
+}
+@mixin bod-rd-br-1 {
+    border-bottom-right-radius: 0.25rem;
+}
+@mixin bod-rd-br-2 {
+    border-bottom-right-radius: 0.5rem;
+}
+@mixin bod-rd-br-3 {
+    border-bottom-right-radius: 0.75rem;
+}
+@mixin bod-rd-br-4 {
+    border-bottom-right-radius: 1rem;
+}
+
+@mixin bod-rd-none {
+    border-radius: 0;
+}
+@mixin bod-rd-1 {
+    border-radius: 0.25rem;
+}
+@mixin bod-rd-2 {
+    border-radius: 0.5rem;
+}
+@mixin bod-rd-3 {
+    border-radius: 0.75rem;
+}
+@mixin bod-rd-4 {
+    border-radius: 1rem;
+}
+

@@ -1,0 +1,75 @@
+@mixin bod-wd-t-none {
+    border-top-width: 0;
+}
+@mixin bod-wd-t-1 {
+    border-top-width: 0.1rem;
+}
+@mixin bod-wd-t-2 {
+    border-top-width: 0.2rem;
+}
+@mixin bod-wd-t-3 {
+    border-top-width: 0.3rem;
+}
+@mixin bod-wd-t-4 {
+    border-top-width: 0.4rem;
+}
+@mixin bod-wd-b-none {
+    border-bottom-width: 0;
+}
+@mixin bod-wd-b-1 {
+    border-bottom-width: 0.1rem;
+}
+@mixin bod-wd-b-2 {
+    border-bottom-width: 0.2rem;
+}
+@mixin bod-wd-b-3 {
+    border-bottom-width: 0.3rem;
+}
+@mixin bod-wd-b-4 {
+    border-bottom-width: 0.4rem;
+}
+@mixin bod-wd-l-none {
+    border-left-width: 0;
+}
+@mixin bod-wd-l-1 {
+    border-left-width: 0.1rem;
+}
+@mixin bod-wd-l-2 {
+    border-left-width: 0.2rem;
+}
+@mixin bod-wd-l-3 {
+    border-left-width: 0.3rem;
+}
+@mixin bod-wd-l-4 {
+    border-left-width: 0.4rem;
+}
+@mixin bod-wd-r-none {
+    border-right-width: 0;
+}
+@mixin bod-wd-r-1 {
+    border-right-width: 0.1rem;
+}
+@mixin bod-wd-r-2 {
+    border-right-width: 0.2rem;
+}
+@mixin bod-wd-r-3 {
+    border-right-width: 0.3rem;
+}
+@mixin bod-wd-r-4 {
+    border-right-width: 0.4rem;
+}
+@mixin bod-wd-none {
+    border: 0;
+}
+@mixin bod-wd-1 {
+    border-width: 0.1rem;
+}
+@mixin bod-wd-2 {
+    border-width: 0.2rem;
+}
+@mixin bod-wd-3 {
+    border-width: 0.3rem;
+}
+@mixin bod-wd-4 {
+    border-width: 0.4rem;
+}

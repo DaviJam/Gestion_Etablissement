@@ -1,0 +1,29 @@
+html {
+    height: 100%;
+}
+
+body {
+    background-image: linear-gradient(to bottom right, #132c33, #51c4d3);
+    background-repeat: no-repeat;
+}
+
+h1 {
+    color: white;
+}
+
+.right {
+    float: right;
+}
+
+.logo {
+    width: 100px;
+}
+
+.mainTitle {
+    padding:15px;
+}
+
+.userlogo {
+    width: 40px;
+    margin-right: 15px;
+}
