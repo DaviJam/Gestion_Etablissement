@@ -4,8 +4,6 @@ import java.util.Date;
 
 /**
  * The type Student.
- *
- * @author Amélie
  */
 public class Student extends Person
 {

@@ -10,9 +10,9 @@ import java.sql.SQLException;
 public class Connect
 {
 	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	private static final String URL = "jdbc:mysql://mysql-gestionetablissement.alwaysdata.net:3306/gestionetablissement_ensup?serverTimezone=UTC";
-	private static final String USERNAME = "225269";
-	private static final String PASSWORD = "GestionEtablissement";
+	private static final String URL = "jdbc:mysql://root@localhost:3308/gestion_etablissement?serverTimezone=UTC";
+	private static final String USERNAME = "root";
+	private static final String PASSWORD = "";
 
 	/**
 	 * Open an connention with the information in the class

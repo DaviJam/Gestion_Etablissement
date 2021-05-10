@@ -1,6 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html class="fs" lang="en">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -19,9 +19,6 @@
                     </div>
                     <div class="row">
                         <a href="/etablissement/students_update" class="btn btn-info form-control">Modifier un étudiant</a>
-                    </div>
-                    <div class="row">
-                        <a href="/etablissement/students_remove" class="btn btn-info form-control">Supprimer un étudiant</a>
                     </div>
                     <div class="row">
                         <a href="/etablissement/students_list" class="btn btn-info form-control">Liste des étudiants</a>

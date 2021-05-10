@@ -2,8 +2,6 @@ package eu.ensup.gestionetablissement.business;
 
 /**
  * The type Person.
- *
- * @author Allan
  */
 public class Person extends Entity{
     private int id;

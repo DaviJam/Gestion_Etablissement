@@ -463,7 +463,7 @@ public class App {
                         PersonService sp = new PersonService();
                         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
                         Date auj = sdf.parse(textField15.getText());
-                        sp.create(textField11.getText(), textField12.getText(), textField13.getText(), textField14.getText(), textField10.getText(), textField16.getText(), 4, auj ,"");
+                        //sp.create(textField11.getText(), textField12.getText(), textField13.getText(), textField14.getText(), textField10.getText(), textField16.getText(), 4, auj ,"");
                         textField10.setText("");
                         textField11.setText("");
                         textField12.setText("");
@@ -474,9 +474,10 @@ public class App {
                         JOptionPane.showMessageDialog(null, "L'étudiant à bien été crée");
                     } catch (NumberFormatException | ParseException nfe) {
                         JOptionPane.showMessageDialog(null, "Un des paramètres à pas a été renseigné");
-                    } catch (ExceptionService es) {
-                        JOptionPane.showMessageDialog(null, es.getMessage());
                     }
+//                    catch (ExceptionService es) {
+//                        JOptionPane.showMessageDialog(null, es.getMessage());
+//                    }
                 }
             }
         });
@@ -511,13 +512,14 @@ public class App {
                         PersonService sp = new PersonService();
                         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
                         Date auj = sdf.parse(textField7.getText());
-                        sp.update(textField3.getText(), textField4.getText(), textField5.getText(), textField6.getText(), textField2.getText(), passwordField2.getText(), 4, auj ,"", Double.parseDouble(textField17.getText()));
+//                        sp.update(textField3.getText(), textField4.getText(), textField5.getText(), textField6.getText(), textField2.getText(), passwordField2.getText(), 4, auj ,"", Double.parseDouble(textField17.getText()));
                         JOptionPane.showMessageDialog(null, "Les informations de l'étudiant ont bien été modifié");
                     } catch (NumberFormatException | ParseException nfe) {
                         JOptionPane.showMessageDialog(null, "Un des paramètres n'a pas été renseigné");
-                    } catch (ExceptionService es) {
-                        JOptionPane.showMessageDialog(null, es.getMessage());
                     }
+//                    catch (ExceptionService es) {
+//                        JOptionPane.showMessageDialog(null, es.getMessage());
+//                    }
                 }
             }
         };

@@ -148,41 +148,42 @@ public class PersonDao implements IPersonDao
             /*
              * CrÃ©er la requÃªte
              */
-            String sql_request = "UPDATE Person SET " +
-                    "firstname = ?, " +
-                    "lastname = ?, " +
-                    "address =  ?, "+
-                    "phone = ?, "+
-                    "role = ?, "+
-                    "password = ?, "+
-                    "dateofbirth = ?, "+
-                    "subjecttaught = ?, "+
-                    "average = ? "+
-                    "WHERE email = ?";
-            st = cn.prepareStatement(sql_request);
+            StringBuilder sql_request = new StringBuilder();
+            sql_request.append("UPDATE Person SET firstname = ?, lastname = ?, address =  ?," +
+                                " phone = ?, role = ?, ");
+            if(!entity.getPassword().isEmpty())
+            {
+                sql_request.append("password = ?, ");
+            }
+            sql_request.append("dateofbirth = ?, subjecttaught = ?, average = ? WHERE email = ?");
+
+            st = cn.prepareStatement(sql_request.toString());
             st.setString(1, entity.getFirstname());
             st.setString(2, entity.getLastname());
             st.setString(3, entity.getAddress());
             st.setString(4, entity.getPhoneNumber());
             st.setInt   (5, entity.getRole().getNum());
-            st.setString(6, entity.getPassword());
+            if(!entity.getPassword().isEmpty())
+            {
+                st.setString(6, entity.getPassword());
+            }
             if(entity instanceof Student)
             {
-                st.setDate  (7, new java.sql.Date(((Student) entity).getDateOfBirth().getTime()));
-                st.setString(8, null);
-                st.setDouble(9, ((Student) entity).getAverage());
+                st.setDate  ((!entity.getPassword().isEmpty()) ? 7 : 6, new java.sql.Date(((Student) entity).getDateOfBirth().getTime()));
+                st.setString((!entity.getPassword().isEmpty()) ? 8 : 7, null);
+                st.setDouble((!entity.getPassword().isEmpty()) ? 9 : 8, ((Student) entity).getAverage());
             }else if(entity instanceof Teacher)
             {
-                st.setDate(7, null);
-                st.setString (8, ((Teacher) entity).getSubjectTaught());
-                st.setDouble(9, (Double)null);
+                st.setDate  ((!entity.getPassword().isEmpty()) ? 7 : 6, null);
+                st.setString((!entity.getPassword().isEmpty()) ? 8 : 7, ((Teacher) entity).getSubjectTaught());
+                st.setDouble((!entity.getPassword().isEmpty()) ? 9 : 8, (Double)null);
             }else
             {
-                st.setDate(7, null);
-                st.setString (8, null);
-                st.setDouble(9, (Double)null);
+                st.setDate  ((!entity.getPassword().isEmpty()) ? 7 : 6, null);
+                st.setString((!entity.getPassword().isEmpty()) ? 8 : 7, null);
+                st.setDouble((!entity.getPassword().isEmpty()) ? 9 : 8, (Double)null);
             }
-            st.setString (10,  entity.getMailAddress());
+            st.setString ((!entity.getPassword().isEmpty()) ? 10 : 9,  entity.getMailAddress());
             /*
              * ExÃ©cuter la requÃªte
              */
@@ -478,7 +479,7 @@ public class PersonDao implements IPersonDao
      * Delete person.
      *
      * @param index index of the person in the database
-     * @return List of Person, if an exception was catched, returns -1
+     * @return int, 0 if success.  if an exception was catched, returns -1
      */
     @Override
     public int delete(int index) throws ExceptionDao {
@@ -495,6 +496,49 @@ public class PersonDao implements IPersonDao
             String sql_request = "DELETE FROM Person WHERE id = ?";
             st = cn.prepareStatement(sql_request);
             st.setInt(1, index);
+
+            /*
+             * ExÃ©cuter la requÃªte
+             */
+            res = st.executeUpdate();
+
+            if (res != 0) {
+                DaoLogger.logDaoError(className, methodName,"Echec lors de la suppression de l'utilisateur. Ce dernier n'existe pas dans la base de donnée.");
+            }
+
+            DaoLogger.logDaoInfo(className, methodName,"La suppression de l'utilisateur a réussie.");
+            /*
+             * Fermer la connexion
+             */
+            cn.close();
+
+        } catch (SQLException e) {
+            DaoLogger.logDaoError(className, methodName,"La transaction Delete dans la méthode delete a échouée.",e);
+            throw new ExceptionDao("Impossible de supprimer les informations de cette personne. Veuillez contacter votre administrateur.");
+        }
+        return 0;
+    }
+
+    /**
+     * Delete person.
+     *
+     * @param email email of the person in the database
+     * @return int, 0 if success, if an exception was catched, returns -1
+     */
+    public int delete(String email) throws ExceptionDao {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        try {
+            /*
+             * CrÃ©er la connexion
+             */
+            cn = openConnection();
+
+            /*
+             * CrÃ©er la requÃªte
+             */
+            String sql_request = "DELETE FROM Person WHERE email = ?";
+            st = cn.prepareStatement(sql_request);
+            st.setString(1, email);
 
             /*
              * ExÃ©cuter la requÃªte

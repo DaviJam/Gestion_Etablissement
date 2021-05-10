@@ -1,0 +1,28 @@
+@import "border-width.scss";
+@import "border-color.scss";
+@import "border-radius.scss";
+@import "border-style.scss";
+@import "align.scss";
+
+.table-outline {
+    //border width 1px
+    @include bod-wd-1;
+
+    //border width solid
+    @include bod-st-solid;
+
+    //border color dark
+    @include bod-clr-dark;
+
+    //border radius 0.25rem
+    @include bod-rd-1;
+
+    //align text center horizontally
+    @include t-al-center;
+}
+
+.table-item {
+    @include t-al-mid;
+    @include t-al-center;
+}
+

@@ -23,6 +23,10 @@
     margin-right:20px !important;
 }
 
+html, body {
+ height: 100%;
+}
+
 body {
     background-image: linear-gradient(to bottom right, #132c33, #51c4d3);
     background-repeat: no-repeat;

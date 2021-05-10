@@ -27,7 +27,7 @@ import eu.ensup.gestionetablissement.mapper.TeacherMapper;
 /**
  * The type Service person.
  */
-public class PersonService implements IService<PersonDTO> {
+public class PersonService implements IPersonService {
 
     private IPersonDao dao = null;
 
@@ -154,16 +154,29 @@ public class PersonService implements IService<PersonDTO> {
     }
 
     @Override
+    public int delete(String email) throws ExceptionService {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        int res = 0;
+        try{
+            res = this.dao.delete(email);
+        }catch (ExceptionDao exceptionDao){
+            serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
+            throw new ExceptionService(exceptionDao.getMessage());
+        }
+        return 0;
+    }
+
+    @Override
     public int delete(int index) throws ExceptionService {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         int res = 0;
         try{
          res = this.dao.delete(index);
-        return res;
         }catch (ExceptionDao exceptionDao){
             serviceLogger.logServiceError(className, methodName,"Un problème est survenue lors de l'appel à cette méthode.");
             throw new ExceptionService(exceptionDao.getMessage());
         }
+        return res;
     }
 
     /**
