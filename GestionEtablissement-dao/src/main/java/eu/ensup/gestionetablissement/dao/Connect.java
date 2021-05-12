@@ -1,19 +1,21 @@
 package eu.ensup.gestionetablissement.dao;
 
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * The type Connect.
  */
 public class Connect
 {
-	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	private static final String URL = "jdbc:mysql://root@localhost:3306/gestion_etablissement?serverTimezone=UTC";
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "";
-
+	private static String DRIVER = "";
+	private static String URL = "";
+	private static String USERNAME = "";
+	private static String PASSWORD = "";
+	private static Properties properties = new Properties();
 	/**
 	 * Open an connention with the information in the class
 	 *
@@ -21,6 +23,18 @@ public class Connect
 	 */
 	public static Connection openConnection() throws ExceptionDao
 	{
+
+		InputStream inputStream = Connect.class.getClassLoader().getResourceAsStream("db.properties");
+		try {
+			properties.load(inputStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		DRIVER = properties.getProperty("db.driver");
+		URL = properties.getProperty("db.url");
+		USERNAME = properties.getProperty("db.username");
+		PASSWORD = properties.getProperty("db.password");
+
 		Connection cn = null;
 		try
 		{
@@ -31,7 +45,7 @@ public class Connect
 			//Récuperation de la connection
 			if( URL != null && USERNAME != null && PASSWORD != null )
 				cn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-			
+
 			if( cn == null && URL != null )
 				cn = DriverManager.getConnection(URL);
 
@@ -39,9 +53,9 @@ public class Connect
 		}
 		catch (ClassNotFoundException | SQLException e){
 			// TODO:  Add logger failed and successfull
-			throw new ExceptionDao("Nous ne parvenons pas à joindre le serveur distant. Veuillez réessayer ultérieurement");
+			throw new ExceptionDao("Nous ne parvenons pas à joindre le serveur distant. Veuillez réessayer ultérieurement" + e);
 		}
-		
+
 		return cn;
 	}
 }
