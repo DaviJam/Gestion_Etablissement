@@ -17,33 +17,33 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Nom</label>
-                            <input name="Surname" class="form-control" type="text" placeholder="Nom">
+                            <input name="Surname" class="form-control" type="text" placeholder="Nom" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Prenom</label>
-                            <input name="Name" class="form-control" type="text" placeholder="Prenom">
+                            <input name="Name" class="form-control" type="text" placeholder="Prenom" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Email</label>
-                            <input name="Email" class="form-control" type="email" placeholder="Email">
+                            <input name="Email" class="form-control" type="email" placeholder="Email" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Date de naissance</label>
-                            <input name="BDate" class="form-control" type="date" placeholder="Date de naissance">
+                            <input name="BDate" class="form-control" type="date" placeholder="Date de naissance" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label>Adresse</label>
-                            <input name="address" class="form-control" type="text" placeholder="Adresse">
+                            <input name="address" class="form-control" type="text" placeholder="Adresse" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label>Numéro de téléphone</label>
-                            <input name="tel" class="form-control" type="tel" placeholder="+XX X XX XX XX XX">
+                            <input name="tel" class="form-control" type="tel" placeholder="+XX XX XX XX XX" required>
                         </div>
                     </div>
                 </form>

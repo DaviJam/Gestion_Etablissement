@@ -2,13 +2,18 @@
 
 
 ## Pré-requis
-Version java : 15.0.2
+Version java : 15.0.2 <br>
+Système de gestion de Base de donnée: MySQL <br>
+Container web Tomcat : version 7.0
 
 ## Utilisation
 Cloner le projet dans le répertoire de votre choix.
 > git clone -b David https://github.com/DaviJam/Gestion_Etablissement.git
 
 # GestionEtablissement
+
+## Release V5 
+* Création de la version WEB de l'application
 
 ## Release V4
 
@@ -36,21 +41,26 @@ Création du projet
 
 Ce logiciel permet de gérer un etablissement scolaire. Il est actuellement possible de :
 
-* Gérer les cours de l'école;
-* Gérer les étudiants;
-* Associer un cours à un étudiant;
+* Se connecter,
+* Gérer les cours de l'école,
+* Gérer les étudiants,
+* Associer un cours à un étudiant,
+* Donner une note à un étudiant pour un cours donnée,
 * Accéder à la liste des étudiants (pour le directeur uniquement)
 
-## Installation
+:warning: Les fonctionnalités suivantes n'ont été implémentéés :
+* Accéder au menu de l'organisation depuis l'accueil,
+* Créer un compte,
+* Accéder au menu Planning depuis l'accueil,
 
-Pré-requis: avoir installé Java en local sur son ordinateur
+## Installation
 
 * Aller dans le projet Github : https://github.com/DaviJam/GestionEtablissement.
 * Cliquer sur le bouton vert "code" puis télécharger le fichier zip.
 * Dans Windows extraire le fichier zip.
 * Se rendre dans le dossier "GestionEtablissement".
-* Double-cliquer le fichier GestionEtablissement.jar.
-* L'application s'ouvre.
+* Copier/Coller le fichier GestionEtablissement.war dans le répertoire 'webapps' de votre container web. Vous devez avoir une instance de tomcat en fonctionnement.
+* Ouvrir la page web http://localhost:8080/etablissement/accueil dans votre navigateur
 
 Deux choix sont alors possibles.
 
@@ -66,7 +76,7 @@ Deux choix sont alors possibles.
 
 ## Localisation du répertoire des Logs
 
-* Le répertoire des logs est situé dans le même répertoire que le .jar.
+* Le répertoire des logs est situé dans le même répertoire que le .war.
 
 ## Convention de nommage
 

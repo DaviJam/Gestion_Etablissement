@@ -155,7 +155,7 @@ public class PersonDao implements IPersonDao
             {
                 sql_request.append("password = ?, ");
             }
-            sql_request.append("dateofbirth = ?, subjecttaught = ?, average = ? WHERE email = ?");
+            sql_request.append("dateofbirth = ?, subjecttaught = ?, average = ?, email = ? WHERE id = ?");
 
             st = cn.prepareStatement(sql_request.toString());
             st.setString(1, entity.getFirstname());
@@ -171,7 +171,9 @@ public class PersonDao implements IPersonDao
             {
                 st.setDate  ((!entity.getPassword().isEmpty()) ? 7 : 6, new java.sql.Date(((Student) entity).getDateOfBirth().getTime()));
                 st.setString((!entity.getPassword().isEmpty()) ? 8 : 7, null);
-                st.setDouble((!entity.getPassword().isEmpty()) ? 9 : 8, ((Student) entity).getAverage());
+                System.out.println("Student updated "+entity.getId()+" with average " + ((Student)entity).getAverage());
+
+                st.setFloat((!entity.getPassword().isEmpty()) ? 9 : 8, (float)((Student) entity).getAverage());
             }else if(entity instanceof Teacher)
             {
                 st.setDate  ((!entity.getPassword().isEmpty()) ? 7 : 6, null);
@@ -184,6 +186,8 @@ public class PersonDao implements IPersonDao
                 st.setDouble((!entity.getPassword().isEmpty()) ? 9 : 8, (Double)null);
             }
             st.setString ((!entity.getPassword().isEmpty()) ? 10 : 9,  entity.getMailAddress());
+            st.setInt ((!entity.getPassword().isEmpty()) ? 11 : 10,  entity.getId());
+
             /*
              * ExÃ©cuter la requÃªte
              */
@@ -253,15 +257,15 @@ public class PersonDao implements IPersonDao
                 Object subjecttaught = rs.getObject("subjecttaught");
                 float average = rs.getFloat("average");
 
-                if(rs.getInt("role") == Role.DIRECTOR.getNum())
+                if(role == Role.DIRECTOR.getNum())
                 {
                     p1 = new Director(lastname, email, address, phone, id, firstName, password);
                 }
-                else if(rs.getInt("role") == Role.MANAGER.getNum())
+                else if(role == Role.MANAGER.getNum())
                 {
                     p1 = new Manager(lastname, email, address, phone, id, firstName, password);
                 }
-                else if(rs.getInt("role") == Role.TEACHER.getNum())
+                else if(role == Role.TEACHER.getNum())
                 {
                     if(subjecttaught != null) {
                         p1 = new Teacher(lastname, email, address, phone, id, firstName, password, (String)subjecttaught);
@@ -270,7 +274,7 @@ public class PersonDao implements IPersonDao
                         p1 = new Teacher(lastname, email, address, phone, id, firstName, password, null);
                     }
                 }
-                else if(rs.getInt("role") == Role.STUDENT.getNum())
+                else if(role == Role.STUDENT.getNum())
                 {
                     if(dateofbirth != null) {
                         p1 = new Student(lastname, email, address, phone, id, firstName, password, (Date)dateofbirth, average);
@@ -278,6 +282,7 @@ public class PersonDao implements IPersonDao
                         p1 = new Student(lastname, email, address, phone, id, firstName, password, null, average);
                     }
                 }
+
                 DaoLogger.logDaoInfo(className, methodName,"Les information de l'utilisateur " + lastname +" "+firstName + " " + email + " ont été récupérer de la base de donnée.");
             } else {
                 DaoLogger.logDaoError(className, methodName,"Echec de récupération d'information concernant l'utilisateur. Ce dernier n'existe pas en base de donnée.");
@@ -425,7 +430,6 @@ public class PersonDao implements IPersonDao
                 Object dateofbirth = rs.getObject("dateofbirth");
                 Object subjecttaught = rs.getObject("subjecttaught");
                 float average = rs.getFloat("average");
-
                 Person p1 = null;
 
                 if(rs.getInt("role") == Role.DIRECTOR.getNum())
@@ -592,7 +596,7 @@ public class PersonDao implements IPersonDao
             res = st.executeUpdate();
             if(res == 0)
             {
-                DaoLogger.logDaoError(className, methodName, "Echec lors de la liasion de l'utilisateur au cours demandé.");
+                DaoLogger.logDaoError(className, methodName, "Echec lors de la liaision de l'utilisateur au cours demandé.");
                 throw new ExceptionDao("Échec lors de la tentative de création de lien entre cette personne et le cours demandé. Le cours ou l'étudiant n'existe pas.");
             }
             else {

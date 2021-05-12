@@ -1,7 +1,10 @@
 package eu.ensup.gestionetablissement.presentation;
 
+import eu.ensup.gestionetablissement.business.Role;
+import eu.ensup.gestionetablissement.dto.PersonDTO;
 import eu.ensup.gestionetablissement.service.ConnectionService;
 import eu.ensup.gestionetablissement.service.ExceptionService;
+import eu.ensup.gestionetablissement.service.PersonService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,7 +28,6 @@ public class LoginController extends HttpServlet {
     private String errorFlag = "error";
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Login WORKING");
 
         RequestDispatcher requestDispatcher;
         /**
@@ -38,7 +40,6 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("POST WORKING");
 
         /**
          * Check for user id
@@ -49,11 +50,14 @@ public class LoginController extends HttpServlet {
         RequestDispatcher requestDispatcher;
 
         ConnectionService cs = new ConnectionService();
-
+        PersonService ps = new PersonService();
+        Role role = null;
         try {
             cs.checkConnection(id, pass);
+            PersonDTO person = ps.get(id);
+            role = person.getRole();
+
         } catch (ExceptionService exceptionService) {
-            System.out.println(exceptionService.getMessage());
             req.setAttribute(errorFlag, exceptionService.getMessage());
             requestDispatcher = req.getRequestDispatcher("connexion.jsp");
             requestDispatcher.forward(req, resp);
@@ -65,6 +69,7 @@ public class LoginController extends HttpServlet {
          */
         HttpSession session = req.getSession();
         session.setAttribute("user-id", id);
+        session.setAttribute("role", role.getNum());
 
         /**
          * Set the content type

@@ -48,6 +48,13 @@ body {
     max-width: 720px;
 }
 
+.container-md {
+    padding-top: 5%;
+    padding-left: 0px;
+    padding-right: 0px;
+    max-width: 720px;
+}
+
 .conform {
     padding-top: 5%;
     padding-left: 100px;
@@ -147,4 +154,8 @@ body {
 .rt {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
+}
+
+.option-small {
+    font-size:12px;
 }

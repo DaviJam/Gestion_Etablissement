@@ -73,6 +73,9 @@ public class StudentController extends HttpServlet {
         switch(req.getRequestURI())
         {
             case "/etablissement/students_menu": {
+                HttpSession session = req.getSession();
+                int role = (int)session.getAttribute("role");
+                req.setAttribute("usrole", role);
                 requestDispatcher = req.getRequestDispatcher("/student_menu.jsp");
                 requestDispatcher.forward(req, resp);
                 return;
@@ -83,6 +86,7 @@ public class StudentController extends HttpServlet {
                     try {
                         PersonService sc = new PersonService();
                         StudentDTO student = new StudentDTO();
+                        student.setId(Integer.parseInt(req.getParameter("ID")));
                         student.setLastname(req.getParameter("Surname"));
                         student.setFirstname(req.getParameter("Name"));
                         student.setMailAddress(req.getParameter("Email"));
@@ -96,7 +100,6 @@ public class StudentController extends HttpServlet {
                     }
                     catch(Exception e)
                     {
-                        System.out.println(e.toString());
                         req.setAttribute(errorFlag, e.getMessage());
                         resp.sendRedirect(req.getContextPath() + "/students_update");
                         return;
@@ -197,7 +200,7 @@ public class StudentController extends HttpServlet {
             case "/etablissement/students_remove": {
                 try {
                     PersonService sc = new PersonService();
-                    sc.delete(req.getParameter("email"));
+                    sc.delete(Integer.parseInt(req.getParameter("id")));
                     List<StudentDTO> students = getStudentList();
                     req.setAttribute("students", students);
                     students.forEach((student) -> {
@@ -212,7 +215,8 @@ public class StudentController extends HttpServlet {
                 catch(Exception e)
                 {
                     req.setAttribute(errorFlag, e.getMessage());
-                    resp.sendRedirect(req.getContextPath() + "/students_update");
+                    requestDispatcher = req.getRequestDispatcher("/update_student.jsp");
+                    requestDispatcher.forward(req, resp);
                     return;
                 }
                 requestDispatcher = req.getRequestDispatcher("/update_student.jsp");
@@ -227,7 +231,8 @@ public class StudentController extends HttpServlet {
                     }
                     catch(Exception e){
                         req.setAttribute(errorFlag, e.getMessage());
-                        resp.sendRedirect(req.getContextPath() + "/students_list");
+                        requestDispatcher = req.getRequestDispatcher("/list_student.jsp");
+                        requestDispatcher.forward(req, resp);
                         return;
                     }
                     requestDispatcher = req.getRequestDispatcher("/list_student.jsp");

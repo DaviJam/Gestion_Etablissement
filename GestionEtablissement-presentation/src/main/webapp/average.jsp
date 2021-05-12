@@ -16,38 +16,32 @@
             <div class="cst-form">
                 <div class="row col-xl-12 col-md-12 m-1 p-1">
                     <div class="col-xl-9 col-md-9">
-                        <h1 class="form-title">Gestion des cours</h1>
+                        <h1 class="form-title">Gestion des notes</h1>
                     </div>
                     <div class="col-xl-3 col-md-3 al_middle">
                         <a href="/etablissement/accueil" class="btn btn-info " >Retour</a>
                     </div>
                 </div>
-                <form class="container-fluid" action="/etablissement/course_add" id="courseform">
-                    <div class="row m-0">
-                        <h3 class="form-title">Créer un cours</h3>
-                    </div>
+                <form class="container-fluid" action="/etablissement/average_add" id="averageform">
                     <div class="form-row mb-3">
-                        <div class="form-group col-md-6">
-                            <label>Thème du cours</label>
-                            <input name="theme" class="form-control" type="text" placeholder="Thème du cours" form="courseform" required>
+                        <div class="form-group col-md-5">
+                            <label>Choisir un cours</label>
+                            <select class="form-control" name="course_id" id="course_select" form="averageform" required>
+                                <option value="">--Sélectionner un cours--</option>
+                                <c:forEach items="${courses}" var="course">
+                                    <option value="${course.getId()}"><c:out value="${course.getCourseSubject()}"/></option>
+                                </c:forEach>
+                            </select>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label >Nombre d'heures</label>
-                            <input name="nbHours" class="form-control" type="number" placeholder="Nombre d'heures" form="courseform" required>
+                        <div class="form-group col-md-5">
+                            <label>Note</label>
+                            <input name="mark" class="form-control" type="number" placeholder="Note" form="averageform" required>
                         </div>
-                        <div class="form-group col-md-2 al_bottom">
-                            <button formmethod="post" form="courseform" type="submit" class="btn btn-success">Créer</button>
-                        </div>
-                    </div>
-                </form>
-                <form class="container-fluid" action="/etablissement/course_link" id="studentform">
-                    <div class="row m-0">
-                        <h3 class="form-title">Associer un étudiant à un cours</h3>
                     </div>
                     <div class="form-row mb-3">
                         <div class="form-group col-md-5">
                             <label for="student_id">Choisir un étudiant</label>
-                            <select class="form-control" name="student_id" id="student_select" form="studentform" required>
+                            <select class="form-control" name="student_id" id="student_select" form="averageform" required>
                                 <option value="">--Sélectionner un étudiant--</option>
                                 <c:forEach items="${students}" var="student">
                                     <option value="${student.getId()}"><c:out value="${student.getLastname()}"/> <c:out value="${student.getFirstname()}"/></option>
@@ -55,16 +49,11 @@
                             </select>
                         </div>
                         <div class="form-group col-md-5">
-                            <label>Choisir un cours</label>
-                            <select class="form-control" name="course_id" id="course_select" form="studentform" required>
-                                <option value="">--Sélectionner un cours--</option>
-                                <c:forEach items="${courses}" var="course">
-                                    <option value="${course.getId()}"><c:out value="${course.getCourseSubject()}"/></option>
-                                </c:forEach>
-                            </select>
+                            <label>Appréciations</label>
+                            <input name="assessment" class="form-control" type="text" placeholder="Appréciations" form="averageform" required>
                         </div>
                         <div class="form-group col-md-2 al_bottom">
-                             <button formmethod="post" form="studentform" type="submit" class="btn btn-warning">Associer</button>
+                             <button formmethod="post" form="averageform" type="submit" class="btn btn-success">Ajouter</button>
                         </div>
                     </div>
                 </form>

@@ -26,20 +26,21 @@ public class MarkDao implements IMarkDao
         {
             st = cn.createStatement();
             res = st.executeQuery("SELECT * FROM Mark");
-            if(!res.next()){
-                throw new ExceptionDao("Aucun mark disponible dans la base de donnée.");
-            }
+
             while( res.next() )
             {
                 Mark cours = new Mark(res.getInt("id"), res.getInt("idStudent"), res.getInt("idCourse"), res.getFloat("mark"), res.getString("assessment"));
 
                 allMark.add(cours);
             }
+            if(allMark.isEmpty()) {
+            }
 
             // TODO:  Add logger failed and successfull
             if(allMark.isEmpty())
             {
                 DaoLogger.logDaoError(className, methodName,"Echec de récupération d'information concernant tous les Mark.");
+                throw new ExceptionDao("Aucun mark disponible dans la base de donnée.");
             }
 
             DaoLogger.logDaoInfo(className, methodName,"La récupération des informations concernant tous les mark a réussie.");
@@ -56,7 +57,8 @@ public class MarkDao implements IMarkDao
         return allMark;
     }
 
-    public List<Mark> getAllMarkByStudentId( int index )  throws ExceptionDao
+    @Override
+    public List<Mark> getAllMarkByStudentId( int index ) throws ExceptionDao
     {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         Connection cn = Connect.openConnection();

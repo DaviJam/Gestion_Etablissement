@@ -26,3 +26,12 @@
     @include t-al-center;
 }
 
+.al_bottom {
+    @include t-al-flex-bot;
+}
+
+.al_middle {
+    @include t-al-flex-mid;
+    @include t-al-center;
+    @include t-al-mid;
+}

@@ -1,12 +1,13 @@
 package eu.ensup.gestionetablissement.presentation;
 
-
 import eu.ensup.gestionetablissement.business.Role;
 import eu.ensup.gestionetablissement.dto.CourseDTO;
+import eu.ensup.gestionetablissement.dto.MarkDTO;
 import eu.ensup.gestionetablissement.dto.PersonDTO;
 import eu.ensup.gestionetablissement.dto.StudentDTO;
 import eu.ensup.gestionetablissement.service.CourseService;
 import eu.ensup.gestionetablissement.service.ExceptionService;
+import eu.ensup.gestionetablissement.service.MarkService;
 import eu.ensup.gestionetablissement.service.PersonService;
 
 import javax.servlet.RequestDispatcher;
@@ -19,22 +20,23 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @WebServlet(
-    name = "CourseController",
+    name = "AverageController",
     urlPatterns = {
-        "/course_menu",
-        "/course_add",
-        "/course_link"
+        "/average_menu",
+        "/average_add"
     }
 )
-public class CourseController extends HttpServlet {
+public class AverageController extends HttpServlet {
     private String successFlag = "success";
     private String errorFlag = "error";
+
     /**
      * Instantiates a new Student controller.
      */
-    public CourseController() {
+    public AverageController() {
         super();
     }
 
@@ -49,13 +51,13 @@ public class CourseController extends HttpServlet {
     }
 
     private void handleMethods(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(!checkUser(req,resp)) {
+        if (!checkUser(req, resp)) {
             return;
         }
         RequestDispatcher requestDispatcher;
 
-        switch(req.getRequestURI()) {
-            case "/etablissement/course_menu":  {
+        switch (req.getRequestURI()) {
+            case "/etablissement/average_menu": {
                 if(req.getMethod().equals("GET"))
                 {
                     try {
@@ -63,65 +65,55 @@ public class CourseController extends HttpServlet {
                         req.setAttribute("students", getAllStudent());
                     }
                     catch(Exception e) {
-                        requestDispatcher = req.getRequestDispatcher("course.jsp");
-                        requestDispatcher.forward(req, resp);
-                        return;
-                    }
-
-                    requestDispatcher = req.getRequestDispatcher("course.jsp");
-                    requestDispatcher.forward(req, resp);
-                }
-            }
-            case "/etablissement/course_add":  {
-                if(req.getMethod().equals("POST"))
-                {
-                    try {
-                        CourseService cs = new CourseService();
-                        String theme = req.getParameter("theme");
-                        float nbHours = Float.parseFloat(req.getParameter("nbHours"));
-                        CourseDTO course = new CourseDTO(theme, nbHours);
-                        cs.create(course);
-                        req.setAttribute(successFlag, "Cours ajouté avec succès");
-                        req.setAttribute("courses", getAllCourse() );
-                        req.setAttribute("students", getAllStudent());
-                    }
-                    catch(Exception e)
-                    {
                         req.setAttribute(errorFlag, e.getMessage());
-                        requestDispatcher = req.getRequestDispatcher("course.jsp");
+                        requestDispatcher = req.getRequestDispatcher("average.jsp");
                         requestDispatcher.forward(req, resp);
                         return;
                     }
 
-                    requestDispatcher = req.getRequestDispatcher("course.jsp");
+                    requestDispatcher = req.getRequestDispatcher("average.jsp");
                     requestDispatcher.forward(req, resp);
-
-                    return;
                 }
             }
-            case "/etablissement/course_link":  {
+            case "/etablissement/average_add": {
                 if(req.getMethod().equals("POST"))
                 {
                     int student_id = Integer.parseInt(req.getParameter("student_id"));
                     int course_id = Integer.parseInt(req.getParameter("course_id"));
+                    float mark = Float.parseFloat(req.getParameter("mark"));
+                    String assessment = req.getParameter("assessment");
 
+                    MarkService ms = null;
                     PersonService ps = null;
                     try {
                         req.setAttribute("courses", getAllCourse() );
                         req.setAttribute("students", getAllStudent());
                         ps = new PersonService();
-                        ps.linkToCourse(student_id, course_id);
-                        req.setAttribute(successFlag, "Etudiant lié au cours avec succès");
+                        ms = new MarkService();
+                        MarkDTO markDTO = new MarkDTO(student_id, course_id, mark, assessment);
+                        ms.create(markDTO);
+                        List<MarkDTO> markList = ms.getAllById(student_id);
+                        double average = 0.0;
+                        AtomicReference<Double> score = new AtomicReference<>(0.0);
+                        markList.forEach((scoreDTO)->{
+                            score.updateAndGet(v -> (v + scoreDTO.getMark()));
+                        });
+                        average = score.get() / markList.size();
+                        StudentDTO person = (StudentDTO)ps.get(student_id);
+                        person.setAverage(average);
+                        ps.update(person);
+                        StudentDTO tt = (StudentDTO)ps.get(student_id);
+                        req.setAttribute(successFlag, "Note et appréciation ajouté avec succès.");
                     }
                     catch(Exception e)
                     {
                         req.setAttribute(errorFlag, e.getMessage());
-                        requestDispatcher = req.getRequestDispatcher("course.jsp");
+                        requestDispatcher = req.getRequestDispatcher("average.jsp");
                         requestDispatcher.forward(req, resp);
                         return;
                     }
 
-                    requestDispatcher = req.getRequestDispatcher("course.jsp");
+                    requestDispatcher = req.getRequestDispatcher("average.jsp");
                     requestDispatcher.forward(req, resp);
                     return;
                 }
@@ -158,5 +150,4 @@ public class CourseController extends HttpServlet {
         });
         return studentList;
     }
-
 }

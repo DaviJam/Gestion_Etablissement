@@ -17,28 +17,49 @@
     document.addEventListener('DOMContentLoaded', () => {
        var students = ${students_json};
 
-        function getUserByEmail(mail) {
+        function getUserByID(id) {
           return students.filter(
-              function(students){ return students.mailAddress == mail }
+              function(students){ return students.id == id }
           );
         }
 
         document.querySelector('#student_select').addEventListener("change", function() {
             document.querySelector(".success").innerText ="";
+            document.querySelector(".warning").innerText ="";
 
-            let user = getUserByEmail(this.value)
+            let user = getUserByID(this.value)
+            console.log(user);
+            if(Array.isArray(user) && user.length > 0)
+            {
+                $('input[name="Surname"]').val(user[0].lastname);
+                $('input[name="Name"]').val(user[0].firstname);
+                $('input[name="Email"]').val(user[0].mailAddress);
+                $('input[name="BDate"]').val(user[0].dateOfBirth);
+                $('input[name="address"]').val(user[0].address);
+                $('input[name="tel"]').val(user[0].phoneNumber);
+                $('input[name="ID"]').val(user[0].id);
 
-            $('input[name="Surname"]').val(user[0].lastname);
-            $('input[name="Name"]').val(user[0].firstname);
-            $('input[name="Email"]').val(user[0].mailAddress);
-            $('input[name="BDate"]').val(user[0].dateOfBirth);
-            $('input[name="address"]').val(user[0].address);
-            $('input[name="tel"]').val(user[0].phoneNumber);
+            }
+            else
+            {
+                $('form#userform :input').each( function() {
+                    this.value ="";
+                });
+            }
         });
 
         $('#userDel').submit(function() {
-            $('input[name="email"]').val($('input[name="Email"]').val());
-            return true;
+            var retVal = false;
+            if($('input[name="ID"]').val() != "")
+            {
+                $('input[name="id"]').val($('input[name="ID"]').val());
+                retVal = true;
+            }
+            else
+            {
+                $('p[class="warning"]').text("Veuillez remplir tous les champs.");
+            }
+            return retVal;
         });
     });
     </script
@@ -53,10 +74,10 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="student_select" form="userform" >Choisir un étudiant</label>
-                                    <select class="form-control" name="students" id="student_select">
+                                    <select class="form-control" name="students" id="student_select" required>
                                         <option value="">--Sélectionner un étudiant--</option>
                                         <c:forEach items="${students}" var="student">
-                                            <option value="${student.getMailAddress()}"><c:out value="${student.getLastname()}"/> <c:out value="${student.getFirstname()}"/></option>
+                                            <option value="${student.getId()}"><c:out value="${student.getLastname()}"/> <c:out value="${student.getFirstname()}"/></option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -64,40 +85,41 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Nom</label>
-                                    <input name="Surname" class="form-control" type="text" placeholder="Nom">
+                                    <input form="userform" name="Surname" class="form-control" type="text" placeholder="Nom" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Prenom</label>
-                                    <input name="Name" class="form-control" type="text" placeholder="Prenom">
+                                    <input form="userform" name="Name" class="form-control" type="text" placeholder="Prenom" required>
+                                    <input name="ID" class="form-control" type="number" placeholder="id" value="" hidden>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Email</label>
-                                    <input name="Email" class="form-control" type="email" placeholder="Email">
+                                    <input form="userform" name="Email" class="form-control" type="email" placeholder="Email" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Date de naissance</label>
-                                    <input name="BDate" class="form-control" type="text" placeholder="Date de naissance">
+                                    <input form="userform" name="BDate" class="form-control" type="text" placeholder="Date de naissance" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Adresse</label>
-                                    <input name="address" class="form-control" type="text" placeholder="Adresse">
+                                    <input form="userform" name="address" class="form-control" type="text" placeholder="Adresse" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label>Numéro de téléphone</label>
-                                    <input name="tel" class="form-control" type="tel" placeholder="+XX X XX XX XX XX">
+                                    <input form="userform" name="tel" class="form-control" type="tel" placeholder="+XX X XX XX XX XX" required>
                                 </div>
                                 <div class="form-group col-md-7" style="align-self: flex-end;">
                                     <p class="success" style="color:green;">${ success }</p>
                                 </div>
                             </div>
                         </form>
-                        <div class="row mar-none">
+                        <div class="row my-0 mar-l-2">
                             <p class="warning" style="color:red;">${ error }</p>
                         </div>
                         <div class="row mar-t-none">
@@ -109,7 +131,7 @@
                             </div>
                             <div class="col al-center">
                                 <form action="/etablissement/students_remove" method="post" id="userDel">
-                                    <input type="hidden" name="email"/>
+                                    <input form="userDel" type="hidden" name="id" required/>
                                     <button id="delBtn" class="btn btn-danger" form="userDel" type="submit">Supprimer</button>
                                 </form>
                             </div>

@@ -34,16 +34,30 @@ public class MarkService implements IMarkService {
 
     public List<MarkDTO> getAll() throws ExceptionService {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
-        List<MarkDTO> listCourseDto = new ArrayList<MarkDTO>();
+        List<MarkDTO> listMarkDto = new ArrayList<MarkDTO>();
 
         try {
             for (Mark c : this.dao.getAll())
-                listCourseDto.add(MarkMapper.businessToDto(c));
+                listMarkDto.add(MarkMapper.businessToDto(c));
         } catch (ExceptionDao exceptionDao) {
             throw new ExceptionService(exceptionDao.getMessage());
         }
 
-        return listCourseDto;
+        return listMarkDto;
+    }
+
+    public List<MarkDTO> getAllById(int id) throws ExceptionService {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        List<MarkDTO> listMarkDto = new ArrayList<>();
+
+        try {
+            for (Mark c : this.dao.getAllMarkByStudentId(id))
+                listMarkDto.add(MarkMapper.businessToDto(c));
+        } catch (ExceptionDao exceptionDao) {
+            throw new ExceptionService(exceptionDao.getMessage());
+        }
+
+        return listMarkDto;
     }
 
     public MarkDTO get(int index) throws ExceptionService {

@@ -1,4 +1,5 @@
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,9 +21,11 @@
                     <div class="row">
                         <a href="/etablissement/students_update" class="btn btn-info form-control">Modifier un étudiant</a>
                     </div>
+                    <c:if test="${usrole==1}">
                     <div class="row">
                         <a href="/etablissement/students_list" class="btn btn-info form-control">Liste des étudiants</a>
                     </div>
+                    </c:if>
                 </div>
                 <div class="row">
                     <div class="col al-center">
