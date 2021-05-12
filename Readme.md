@@ -76,7 +76,8 @@ Deux choix sont alors possibles.
 
 ## Localisation du répertoire des Logs
 
-* Le répertoire des logs est situé dans le même répertoire que le .war.
+Format application
+* Le répertoire des logs est situé dans le même répertoire que le .jar.
 
 ## Convention de nommage
 
