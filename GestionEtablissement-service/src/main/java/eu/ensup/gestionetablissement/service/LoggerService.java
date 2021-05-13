@@ -15,6 +15,6 @@ public class LoggerService extends LoggerHandler {
     }
 
     public void logServiceInfo(String className, String methodName, String message) {
-        Logger.getLogger(IService.class.getPackageName()).error("SERVICE Info: "+ className + " " + methodName + " - " + message);
+        Logger.getLogger(IService.class.getPackageName()).info("SERVICE Info: "+ className + " " + methodName + " - " + message);
     }
 }

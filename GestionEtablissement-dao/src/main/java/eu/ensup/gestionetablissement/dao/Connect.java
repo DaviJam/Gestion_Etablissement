@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import static eu.ensup.gestionetablissement.dao.IDao.DaoLogger;
+
 /**
  * The type Connect.
  */
@@ -16,6 +18,7 @@ public class Connect
 	private static String USERNAME = "";
 	private static String PASSWORD = "";
 	private static Properties properties = new Properties();
+	static String className = Connect.class.getName();
 	/**
 	 * Open an connention with the information in the class
 	 *
@@ -23,12 +26,13 @@ public class Connect
 	 */
 	public static Connection openConnection() throws ExceptionDao
 	{
-
+		String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
 		InputStream inputStream = Connect.class.getClassLoader().getResourceAsStream("db.properties");
 		try {
 			properties.load(inputStream);
 		} catch (IOException e) {
-			e.printStackTrace();
+			DaoLogger.logDaoError(className, methodName,"Base de donnée injoignable. "+e.getMessage() );
+			throw new ExceptionDao("Nous ne parvenons pas à joindre le serveur distant. Veuillez réessayer ultérieurement");
 		}
 		DRIVER = properties.getProperty("db.driver");
 		URL = properties.getProperty("db.url");
@@ -53,7 +57,7 @@ public class Connect
 		}
 		catch (ClassNotFoundException | SQLException e){
 			// TODO:  Add logger failed and successfull
-			throw new ExceptionDao("Nous ne parvenons pas à joindre le serveur distant. Veuillez réessayer ultérieurement" + e);
+			throw new ExceptionDao("Nous ne parvenons pas à joindre le serveur distant. Veuillez réessayer ultérieurement");
 		}
 
 		return cn;
