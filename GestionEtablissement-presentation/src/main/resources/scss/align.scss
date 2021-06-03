@@ -1,0 +1,29 @@
+@mixin t-al-left {
+    text-align: left;
+}
+@mixin t-al-center {
+    text-align: center;
+}
+@mixin t-al-right {
+    text-align: right;
+}
+
+@mixin t-al-bot {
+    vertical-align: sub;
+}
+@mixin t-al-mid {
+    vertical-align: middle;
+}
+@mixin t-al-top {
+    vertical-align: top;
+}
+
+@mixin t-al-flex-bot {
+    align-self: flex-end;
+}
+@mixin t-al-flex-mid {
+    align-self: center;
+}
+@mixin t-al-flex-top {
+    align-self: flex-start;
+}

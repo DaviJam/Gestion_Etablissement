@@ -1,0 +1,50 @@
+@import "border-width.scss";
+@import "border-color.scss";
+@import "border-radius.scss";
+@import "border-style.scss";
+
+.hov-out-light:hover{
+    //border width 1px
+    @include bod-wd-1;
+
+    //border width solid
+    @include bod-st-solid;
+
+    //border color dark
+    @include bod-clr-dark;
+
+    //border radius 0.25rem
+    @include bod-rd-1;
+}
+
+.parent:hover .hov-out-lf-sec {
+    @include bod-rd-tl-2;
+    @include bod-rd-bl-2;
+    @include bod-wd-t-1;
+    @include bod-wd-b-1;
+    @include bod-wd-l-1;
+    @include bod-clr-t-dark;
+    @include bod-clr-b-dark;
+    @include bod-clr-l-dark;
+    @include bod-clr-r-form;
+}
+.parent:hover .hov-out-md-sec {
+    @include bod-wd-t-1;
+    @include bod-wd-b-1;
+    @include bod-wd-l-1;
+    @include bod-clr-t-dark;
+    @include bod-clr-b-dark;
+    @include bod-clr-l-form;
+    @include bod-clr-r-form;
+}
+.parent:hover .hov-out-rg-sec {
+    @include bod-rd-tr-1;
+    @include bod-rd-br-2;
+    @include bod-wd-t-1;
+    @include bod-wd-b-1;
+    @include bod-wd-r-1;
+    @include bod-clr-t-dark;
+    @include bod-clr-b-dark;
+    @include bod-clr-r-dark;
+    @include bod-clr-l-form;
+}
