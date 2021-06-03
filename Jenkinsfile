@@ -3,7 +3,6 @@ pipeline {
 	stages {
 		stage("Build") {
 			steps {
-				echo 
 				bat "mvn clean install test"
 			}
 			post {
