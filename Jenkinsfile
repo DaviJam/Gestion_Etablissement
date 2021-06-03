@@ -8,9 +8,9 @@ pipeline {
 	stages {
 		stage ("Initialize") {
 			steps {
-				echo PATH = %PATH%
-				echo M2_HOME = %M2_HOME%
-				echo JAVA_HOME = %JAVA_HOME%
+				echo "PATH = "%PATH%
+				echo "M2_HOME = "%M2_HOME%
+				echo "JAVA_HOME = "%JAVA_HOME%
 			}
 		}
 		stage("Build") {
