@@ -3,7 +3,8 @@ pipeline {
 	stages {
 		stage("Build") {
 			steps {
-				bat "JAVA_HOME=C:\Program Files\Java\jdk-11.0.9 mvn clean install"
+				echo 
+				bat "mvn clean install test"
 			}
 			post {
                 success {
