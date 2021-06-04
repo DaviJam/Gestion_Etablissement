@@ -7,27 +7,27 @@ pipeline {
 	
 	stages {
 		stage ("Git checkout") {
-			echo "Checking out branch..."
 			steps {
+				echo "Checking out branch..."
 				checkout([$class: 'GitSCM', branches: [[name: '*/job9']], extensions: [], userRemoteConfigs: [[url: 'C:\\Users\\daori\\Documents\\ECOLE\\Dada\\Job7\\Gestion_Etablissement\\.git']]])
 			}
 		}
 		stage("Initialize") {
-			echo "Cleaning up..."
 			steps {
+				echo "Cleaning up..."
 				bat "mvn clean"
 			}
 		}
 		
 		stage("Build") {
-			echo "Building..."
 			steps {
+				echo "Building..."
 				bat "mvn install"
 			}
 		}
 		stage("Test") {
-			echo "Testing and reporting..."
 			steps {
+				echo "Testing and reporting..."
 				bat "mvn test"
 			}
 			post {
@@ -37,9 +37,15 @@ pipeline {
 			}
 		}	
 		stage("Deploy") {
-			echo "Deploying..."
 			steps {
-				//bat "mvn clean test"
+				echo "Deploying..."
+				script {
+					try {
+						deploy adapters: [tomcat7(path: '', url: 'http://localhost:8080')], contextPath: null, onFailure: false, war: '**/*.war'
+					} catch (err) {
+						echo "Error deploying war file..."
+					}
+				}
 			}
 		}
 	}
