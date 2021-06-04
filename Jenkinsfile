@@ -41,7 +41,7 @@ pipeline {
 				echo "Deploying..."
 				script {
 					try {
-						deploy adapters: [tomcat7(path: '', url: 'http://localhost:8080')], contextPath: null, onFailure: false, war: '**/*.war'
+						deploy adapters: [tomcat7(path: 'C:\xampp\tomcat\webapps', url: 'http:\\\\localhost:8080')], contextPath: '/etablissement', war: '**/*.war'
 					} catch (err) {
 						echo "Error deploying war file..."
 					}
