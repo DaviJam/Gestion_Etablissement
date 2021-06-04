@@ -41,7 +41,7 @@ pipeline {
 				echo "Deploying..."
 				script {
 					try {
-						deploy adapters: [tomcat7(credentialsId: 'e8677a13-83bc-4756-8dc9-c76e332cb99b', path: '', url: 'http:\\localhost:8080\')], contextPath: '\\etablissement', war: '**/*.war'
+						deploy adapters: [tomcat7(credentialsId: 'e8677a13-83bc-4756-8dc9-c76e332cb99b', path: '', url: 'http:\\localhost:8080\')], contextPath: '//etablissement', war: '**/*.war'
 					} catch (err) {
 						echo "Error deploying war file..."
 					}
